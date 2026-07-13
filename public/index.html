@@ -4,19 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- ============ SEO META ============ -->
 <title>hoiiandSMP - Minecraft Survival Server | Eaglercraft</title>
 <meta name="description" content="hoiiandSMP is a Minecraft Survival SMP server running on Eaglercraft, version 1.12.2. Build, trade and explore together with our community.">
 <meta name="keywords" content="Minecraft, SMP, Survival, Eaglercraft, hoiiandSMP, browser Minecraft">
 <meta name="author" content="hoiiandSMP">
 <link rel="icon" type="image/png" href="/assets/logo.png">
 
-<!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-<!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
@@ -103,15 +99,28 @@ img{ max-width:100%; display:block; }
   transform: translateY(-2px);
 }
 
-/* Discord logo image (used instead of Font Awesome icon) */
+/* ==========================================================================
+   DISCORD ICON
+   ========================================================================== */
+/*
+ * FIX: Geef het icoon altijd expliciete afmetingen + flex-shrink:0
+ * zodat het nooit krimpt in flex-containers of te klein wordt.
+ */
 .discord-icon{
   width: 18px;
   height: 18px;
   object-fit: contain;
+  display: inline-block; /* voorkomt block-gedrag waardoor het krimpt */
+  flex-shrink: 0;         /* voorkomt krimpen in flex-rijen */
 }
+
+/* Groot Discord-logo (community-sectie) */
 .discord-icon.large{
   width: 34px;
   height: 34px;
+  display: block;         /* zodat margin:auto werkt voor centrering */
+  margin: 0 auto 16px;   /* gecentreerd + ruimte naar tekst eronder */
+  flex-shrink: 0;
 }
 
 /* ==========================================================================
@@ -362,8 +371,8 @@ section{ padding: 80px 20px; }
   border-bottom:1px solid var(--border);
   background: var(--bg-alt);
 }
-.community-section i,
-.community-section img{
+/* Alleen <i> krijgt nog de margin-auto, .large img regelt dit zelf */
+.community-section i{
   margin: 0 auto 16px;
 }
 .community-section h2{
@@ -429,7 +438,8 @@ footer p{ margin: 4px 0; }
     <span>hoiiand<em>SMP</em></span>
   </a>
   <a href="https://discord.gg/ZsDYUfKKRa" class="discord-btn">
-    <img src="/assets/discord.png" alt="Discord" class="discord-icon" onerror="this.style.display='none'"> Join Discord
+    <img src="/assets/discord.png" alt="Discord" class="discord-icon" onerror="this.style.display='none'">
+    Join Discord
   </a>
 </nav>
 
@@ -441,11 +451,15 @@ footer p{ margin: 4px 0; }
   <p class="hero-subtitle">A Minecraft survival community where players can build, trade and explore together.</p>
 
   <div class="hero-buttons">
-    <a href="game.html" class="btn btn-primary"><i class="fa-solid fa-play"></i> Play Now</a>
-    <a href="https://discord.gg/ZsDYUfKKRa" class="btn btn-outline"><img src="/assets/discord.png" alt="Discord" class="discord-icon" onerror="this.style.display='none'"> Join Discord</a>
+    <a href="game.html" class="btn btn-primary">
+      <i class="fa-solid fa-play"></i> Play Now
+    </a>
+    <a href="https://discord.gg/ZsDYUfKKRa" class="btn btn-outline">
+      <img src="/assets/discord.png" alt="Discord" class="discord-icon" onerror="this.style.display='none'">
+      Join Discord
+    </a>
   </div>
 
-  <!-- Server IP with copy button -->
   <div class="ip-box">
     <div class="ip-text">
       <small>Server Address</small>
@@ -519,10 +533,18 @@ footer p{ margin: 4px 0; }
      COMMUNITY / DISCORD SECTION
      ============================================================ -->
 <section class="community-section">
+  <!--
+    FIX: .discord-icon.large heeft nu display:block + margin:0 auto 16px
+    in de CSS, dus het wordt altijd correct gecentreerd weergegeven
+    ongeacht de context.
+  -->
   <img src="/assets/discord.png" alt="Discord" class="discord-icon large" onerror="this.style.display='none'">
   <h2>Join the <em>hoiiandSMP</em> Community</h2>
   <p>Join our Discord community for updates, support and events.</p>
-  <a href="https://discord.gg/ZsDYUfKKRa" class="btn btn-primary"><img src="/assets/discord.png" alt="Discord" class="discord-icon" onerror="this.style.display='none'"> Join Discord</a>
+  <a href="https://discord.gg/ZsDYUfKKRa" class="btn btn-primary">
+    <img src="/assets/discord.png" alt="Discord" class="discord-icon" onerror="this.style.display='none'">
+    Join Discord
+  </a>
 </section>
 
 <!-- ============================================================
@@ -540,12 +562,9 @@ footer p{ margin: 4px 0; }
      JAVASCRIPT
      ============================================================ -->
 <script>
-/* ---------- Copy server IP to clipboard ---------- */
 function copyServerIP(){
   const ip = document.getElementById('server-ip').textContent.trim();
-
   navigator.clipboard.writeText(ip).then(showToast).catch(() => {
-    // Fallback for older browsers
     const temp = document.createElement('textarea');
     temp.value = ip;
     document.body.appendChild(temp);
@@ -562,7 +581,6 @@ function showToast(){
   setTimeout(() => toast.classList.remove('show'), 2000);
 }
 
-/* ---------- Fade-in on scroll ---------- */
 const fadeEls = document.querySelectorAll('.fade-in');
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
